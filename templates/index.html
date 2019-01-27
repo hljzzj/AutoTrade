@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>系统监控走势图</title>
+	<script type="text/javascript" src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+	<script type="text/javascript" src="//cdn.bootcss.com/socket.io/1.5.1/socket.io.min.js"></script>
+	<!-- ECharts 3 引入 -->
+	<script src="http://echarts.baidu.com/dist/echarts.min.js"></script>
+</head>
+
+<body>
+<div id="main" style="height:500px;border:1px solid #ccc;padding:10px;"></div>
+
+<script type="text/javascript">
+
+	var myChart = echarts.init(document.getElementById('main'));
+
+	myChart.setOption({
+		title: {
+			text: '系统监控走势图'
+		},
+		tooltip: {},
+		legend: {
+			data:['cpu']
+		},
+		xAxis: {
+			data: []
+		},
+		yAxis: {},
+		series: [{
+			name: 'cpu',
+			type: 'line',
+			data: []
+		}]
+	});
+
+
+	var time = ["","","","","","","","","",""],
+		cpu = [0,0,0,0,0,0,0,0,0,0]
+
+
+	//准备好统一的 callback 函数
+	var update_Data = function (res) {
+		//res是json格式的response对象
+
+		// 隐藏加载动画
+		myChart.hideLoading();
+
+		// 准备数据
+		time.push(res.data[0]);
+		cpu.push(parseFloat(res.data[1]));
+		if (time.length >= 10){
+			time.shift();
+			cpu.shift();
+		}
+
+		// 填入数据
+		myChart.setOption({
+			xAxis: {
+				data: time
+			},
+			series: [{
+				name: 'cpu', // 根据名字对应到相应的系列
+				data: cpu
+			}]
+		});
+
+	};
+
+
+
+
+	// 建立socket连接，等待服务器“推送”数据，用回调函数更新图表
+	$(document).ready(function() {
+		namespace = '/test';
+		var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+
+		socket.on('server_response', function(res) {
+			update_Data(res);
+		});
+
+	});
+
+</script>
+
+
+
+
+
+<div style="height:500px;border:1px solid #ccc;padding:10px;">
+	<table id="tabData" border="" cellspacing="" cellpadding="" width="500px" align="center">
+		<caption><b>人员名单</b></caption>
+		<tr>
+			<td >平台</td>
+			<td >币种</td>
+			<td>最新价</td>
+			<td>今日最高价</td>
+			<td>今日最低价</td>
+			<td>涨跌幅</td>
+			<td>24H交易量</td>
+			<td>最新价</td>
+		</tr>
+
+		<tbody id="tb1">
+
+		</tbody>
+	</table>
+
+</div>
+<script>
+	var div1 = document.getElementById('tb1');
+	var code = '';
+	code += '<TR><TD>张三</TD><TD>男</TD></TR>';
+	code += '<TR><TD>李三</TD><TD>女</TD></TR>';
+	code += '<TR><TD>王三</TD><TD>男</TD></TR>';
+	code += '<TR><TD>赵三</TD><TD>男</TD></TR>';
+	div1.innerHTML = code;
+</script>
+</body>
+</html>
