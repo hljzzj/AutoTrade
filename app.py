@@ -22,6 +22,13 @@ def background_thread():
         # 获取系统时间（只取分:秒）
         cpus = psutil.cpu_percent(interval=None, percpu=True)
         # 获取系统cpu使用率 non-blocking
+
+
+        # 第一步：获取平台实时价格数据
+
+        # 第二步：处理各平台的数据
+        # 第三步：将数据发前到前端
+
         socketio.emit('server_response',
                       {'data': [t, cpus], 'count': count},
                       namespace='/test')
