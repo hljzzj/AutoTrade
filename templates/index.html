@@ -78,6 +78,7 @@
 
 		socket.on('server_response', function(res) {
 			update_Data(res);
+			tab_Data(res);
 		});
 
 	});
@@ -109,13 +110,15 @@
 
 </div>
 <script>
-	var div1 = document.getElementById('tb1');
-	var code = '';
-	code += '<TR><TD>张三</TD><TD>男</TD></TR>';
-	code += '<TR><TD>李三</TD><TD>女</TD></TR>';
-	code += '<TR><TD>王三</TD><TD>男</TD></TR>';
-	code += '<TR><TD>赵三</TD><TD>男</TD></TR>';
-	div1.innerHTML = code;
+    var tab_Data = function (res) {
+        var div1 = document.getElementById('tb1');
+        var code = '';
+        code += '<TR><TD>火币</TD><TD>'+res.data[0]+'</TD></TR>';
+        code += '<TR><TD>COIN</TD><TD>'+res.data[1]+'</TD></TR>';
+        code += '<TR><TD>王三</TD><TD>男</TD></TR>';
+        code += '<TR><TD>赵三</TD><TD>男</TD></TR>';
+        div1.innerHTML = code;
+    }
 </script>
 </body>
 </html>

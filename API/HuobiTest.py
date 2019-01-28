@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
-#author: 半熟的韭菜
+
 
 from websocket import create_connection
 import gzip
 import time
+import json
 
 if __name__ == '__main__':
     while(1):
@@ -24,10 +24,10 @@ if __name__ == '__main__':
     # tradeStr="""{"sub": "market.ethusdt.depth.step5", "id": "id10"}"""
 
     #请求 Market Depth 数据
-    tradeStr="""{"req": "market.ethusdt.depth.step1", "id": "id10"}"""
+    tradeStr="""{"req": "market.ethusdt.depth.step1", "id": "id0"}"""
 
     #订阅 Trade Detail 数据
-    #tradeStr = """{"sub": "market.btcusdt.trade.detail", "id": "id10"}"""
+    #tradeStr = """{"sub": "market.btcusdt.trade.detail", "id": "id0"}"""
 
     #请求 Trade Detail 数据
     # tradeStr="""{"req": "market.ethusdt.trade.detail", "id": "id10"}"""
@@ -55,4 +55,7 @@ if __name__ == '__main__':
             except Exception:
                 pass
 
-            print(result)
+
+            data = json.loads(result)
+            print(type(data))
+            print(data)
