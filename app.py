@@ -1,8 +1,8 @@
-import psutil
 import time
 from threading import Lock
 from flask import Flask, render_template
 from flask_socketio import SocketIO
+from API.HuobiServices import *
 
 async_mode = None
 app = Flask(__name__)
@@ -14,23 +14,17 @@ thread_lock = Lock()
 
 # 后台线程 产生数据，即刻推送至前端
 def background_thread():
-    count = 0
     while True:
-        socketio.sleep(5)
-        count += 1
-        t = time.strftime('%M:%S', time.localtime())
-        # 获取系统时间（只取分:秒）
-        cpus = psutil.cpu_percent(interval=None, percpu=True)
-        # 获取系统cpu使用率 non-blocking
-
-
+        socketio.sleep(3)
         # 第一步：调用API获取平台实时价格数据
-
+        try:
+            data = get_ticker("ethusdt")
+        except:
+            pass
         # 第二步：处理各平台的数据
-        # 第三步：将数据发前到前端
-
+        # 第三步：将数据发到前端
         socketio.emit('server_response',
-                      {'data': [t, cpus], 'count': count},
+                      {'data': data},
                       namespace='/test')
         # 注意：这里不需要客户端连接的上下文，默认 broadcast = True
 
