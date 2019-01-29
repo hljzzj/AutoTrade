@@ -13,13 +13,14 @@ from datetime import datetime
 # 从配置文件中获取初始化参数
 __iniFilePath = glob.glob("HuobiAPI.ini")
 cfg = configparser.ConfigParser()
+print(cfg)
 cfg.read(__iniFilePath, encoding='utf-8')
-accessKey = cfg.get('ws', 'accessKey')
-secretKey = cfg.get('ws', 'secretKey')
+accessKey = cfg.get('setting', 'accessKey')
+secretKey = cfg.get('setting', 'secretKey')
 
-protocol = cfg.get('ws', 'protocol')
-_host = cfg.get('ws', '_host')
-path = cfg.get('ws', 'path')
+protocol = cfg.get('setting', 'protocol')
+_host = cfg.get('setting', '_host')
+path = cfg.get('setting', 'path')
 
 # 组建获取请求的url
 url = protocol + _host + path

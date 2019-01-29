@@ -3,19 +3,29 @@ import datetime
 import hashlib
 import hmac
 import json
+import glob
+import configparser
 import urllib
 import urllib.parse
 import urllib.request
 import requests
+import os,sys
 
+import zlib
 # 此处填写APIKEY
+__iniFilePath = glob.glob('API/HuobiAPI.ini')
+cfg = configparser.ConfigParser()
+cfg.read(__iniFilePath, encoding='utf-8')
+ACCESS_KEY = cfg.get('setting', 'ACCESS_KEY')
+SECRET_KEY = cfg.get('setting', 'SECRET_KEY')
+_host = cfg.get('setting', '_host')
 
-ACCESS_KEY = "71b1d351-4db92df3-89c66ed3-42008"
-SECRET_KEY = "357bd23d-2bfe6f8d-01c65350-d6fe9"
+# ACCESS_KEY = "71b1d351-4db92df3-89c66ed3-42008"
+# SECRET_KEY = "357bd23d-2bfe6f8d-01c65350-d6fe9"
 
 # API 请求地址
-MARKET_URL = "https://api.huobi.br.com"
-TRADE_URL = "https://api.huobi.br.com"
+MARKET_URL = _host
+TRADE_URL = _host
 
 # 首次运行可通过get_accounts()获取acct_id,然后直接赋值,减少重复获取。
 ACCOUNT_ID = None
