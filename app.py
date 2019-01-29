@@ -3,6 +3,7 @@ from threading import Lock
 from flask import Flask, render_template
 from flask_socketio import SocketIO
 from API.HuobiServices import *
+from API.ZGAPI import ZGtickers
 
 async_mode = None
 app = Flask(__name__)
@@ -19,9 +20,19 @@ def background_thread():
         global data
         # 第一步：调用API获取平台实时价格数据
         try:
-            HuoBiData = get_ticker("ethusdt")
+            # 火币
+            ticker = get_ticker("ethusdt")
+            HuoBiData = ticker['tick']
+            print(HuoBiData)
         except:
             HuoBiData = None
+            pass
+        try:
+            # ZG
+            ZGData = ZGtickers()
+            print(ZGData)
+        except:
+            ZGData = None
             pass
         # 第二步：处理各平台的数据
         # 第三步：将数据发到前端

@@ -7,15 +7,11 @@ ws = websocket.WebSocket()
 # API地址
 tickersURL = 'https://www.zg.com/api/v1/tickers'
 
-def tickers():
-	starttime = time.time()
-	rq = requests.get('https://www.zg.com/api/v1/tickers')
+def ZGtickers():
+	rq = requests.get('https://www.zg.top/API/api/v1/ticker?symbol=36')
 	tickersData = rq.json()
-	endtime = time.time()
-	print(tickersData)
-	print('运行时长：'+str(endtime-starttime))
-	print('第'+str(a)+"次")
-	time.sleep(1)
+	return tickersData['data']
+
 
 
 
@@ -25,5 +21,5 @@ if __name__ == '__main__':
 	a = 0
 	while(True):
 		a += 1
-		tickers()
+		ZGtickers()
 
