@@ -18,7 +18,7 @@
 		var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 
 		socket.on('server_response', function(res) {
-			tab_Data(res);
+			Tab_Data(res);
 		});
 	});
 
@@ -34,6 +34,7 @@
 		<tr>
 			<td >平台</td>
 			<td >币种</td>
+			<td >最新价</td>
 			<td>买一</td>
 			<td>卖一</td>
 			<td>开盘价</td>
@@ -50,41 +51,20 @@
 
 </div>
 <script>
-    var tab_Data = function (res) {
+    var Tab_Data = function (res) {
         var div1 = document.getElementById('tab_Data');
         var code = '';
         code += '<TR>' +
-			'<TD>火币</TD>' +
-			'<TD>ETHUSDT</TD>' +
-			'<TD>'+res.data['tick']['ask'][0]+'</TD>' +
-			'<td>'+res.data['tick']['bid'][0]+'</td>' +
-			'<td>'+res.data['tick']['open']+'</td>' +
-			'<td>'+res.data['tick']['high']+'</td>' +
-			'<td>'+res.data['tick']['low']+'</td>' +
-			'<td>暂无</td>' +
-			'<td>'+res.data['tick']['amount']+'</td>' +
-			'</TR>';
-        code += '<TR>' +
 			'<TD>ZG</TD>' +
 			'<TD>ETHUSDT</TD>' +
-			'<TD>'+res.data['tick']['ask'][0]+'</TD>' +
-			'<td>'+res.data['tick']['bid'][0]+'</td>' +
-			'<td>'+res.data['tick']['open']+'</td>' +
-			'<td>'+res.data['tick']['high']+'</td>' +
-			'<td>'+res.data['tick']['low']+'</td>' +
+			'<TD>'+res.data['ZGData']['last']+'</TD>' +
+			'<TD>'+res.data['ZGData']['buy']+'</TD>' +
+			'<td>'+res.data['ZGData']['sell']+'</td>' +
+			'<td>'+res.data['ZGData']['open']+'</td>' +
+			'<td>'+res.data['ZGData']['high']+'</td>' +
+			'<td>'+res.data['ZGData']['low']+'</td>' +
 			'<td>暂无</td>' +
-			'<td>'+res.data['tick']['amount']+'</td>' +
-			'</TR>';
-        code += '<TR>' +
-			'<TD>火币</TD>' +
-			'<TD>ETHUSDT</TD>' +
-			'<TD>'+res.data['tick']['ask'][0]+'</TD>' +
-			'<td>'+res.data['tick']['bid'][0]+'</td>' +
-			'<td>'+res.data['tick']['open']+'</td>' +
-			'<td>'+res.data['tick']['high']+'</td>' +
-			'<td>'+res.data['tick']['low']+'</td>' +
-			'<td>暂无</td>' +
-			'<td>'+res.data['tick']['amount']+'</td>' +
+			'<td>'+res.data['ZGData']['vol']+'</td>' +
 			'</TR>';
 		code += '<TR>' +
 			'<TD>火币</TD>' +
@@ -97,51 +77,6 @@
 			'<td>暂无</td>' +
 			'<td>'+res.data['tick']['amount']+'</td>' +
 			'</TR>';
-		code += '<TR>' +
-			'<TD>火币</TD>' +
-			'<TD>ETHUSDT</TD>' +
-			'<TD>'+res.data['tick']['ask'][0]+'</TD>' +
-			'<td>'+res.data['tick']['bid'][0]+'</td>' +
-			'<td>'+res.data['tick']['open']+'</td>' +
-			'<td>'+res.data['tick']['high']+'</td>' +
-			'<td>'+res.data['tick']['low']+'</td>' +
-			'<td>暂无</td>' +
-			'<td>'+res.data['tick']['amount']+'</td>' +
-			'</TR>';
-		code += '<TR>' +
-			'<TD>火币</TD>' +
-			'<TD>ETHUSDT</TD>' +
-			'<TD>'+res.data['tick']['ask'][0]+'</TD>' +
-			'<td>'+res.data['tick']['bid'][0]+'</td>' +
-			'<td>'+res.data['tick']['open']+'</td>' +
-			'<td>'+res.data['tick']['high']+'</td>' +
-			'<td>'+res.data['tick']['low']+'</td>' +
-			'<td>暂无</td>' +
-			'<td>'+res.data['tick']['amount']+'</td>' +
-			'</TR>';
-		code += '<TR>' +
-			'<TD>火币</TD>' +
-			'<TD>ETHUSDT</TD>' +
-			'<TD>'+res.data['tick']['ask'][0]+'</TD>' +
-			'<td>'+res.data['tick']['bid'][0]+'</td>' +
-			'<td>'+res.data['tick']['open']+'</td>' +
-			'<td>'+res.data['tick']['high']+'</td>' +
-			'<td>'+res.data['tick']['low']+'</td>' +
-			'<td>暂无</td>' +
-			'<td>'+res.data['tick']['amount']+'</td>' +
-			'</TR>';
-		code += '<TR>' +
-			'<TD>火币</TD>' +
-			'<TD>ETHUSDT</TD>' +
-			'<TD>'+res.data['tick']['ask'][0]+'</TD>' +
-			'<td>'+res.data['tick']['bid'][0]+'</td>' +
-			'<td>'+res.data['tick']['open']+'</td>' +
-			'<td>'+res.data['tick']['high']+'</td>' +
-			'<td>'+res.data['tick']['low']+'</td>' +
-			'<td>暂无</td>' +
-			'<td>'+res.data['tick']['amount']+'</td>' +
-			'</TR>';
-
         div1.innerHTML = code;
     }
 </script>

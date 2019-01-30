@@ -16,28 +16,28 @@ thread_lock = Lock()
 # 后台线程 产生数据，即刻推送至前端
 def background_thread():
     while True:
-        socketio.sleep(3)
-        global data
+        socketio.sleep(5)
         # 第一步：调用API获取平台实时价格数据
         try:
             # 火币
             ticker = get_ticker("ethusdt")
             HuoBiData = ticker['tick']
-            print(HuoBiData)
         except:
             HuoBiData = None
             pass
         try:
             # ZG
             ZGData = ZGtickers()
-            print(ZGData)
         except:
             ZGData = None
             pass
         # 第二步：处理各平台的数据
+
+        Data = {'HuoBiData': HuoBiData, 'ZGData': ZGData}
+        print(Data)
         # 第三步：将数据发到前端
         socketio.emit('server_response',
-                      {'HuoBiData': HuoBiData},
+                      {'Data': Data},
                       namespace='/test')
         # 注意：这里不需要客户端连接的上下文，默认 broadcast = True
 
