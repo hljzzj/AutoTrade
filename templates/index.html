@@ -53,29 +53,31 @@
 <script>
     var Tab_Data = function (res) {
         var div1 = document.getElementById('tab_Data');
+        console.log(typeof res)
+        console.log(res.Data.ZGData['last'])
         var code = '';
         code += '<TR>' +
 			'<TD>ZG</TD>' +
 			'<TD>ETHUSDT</TD>' +
-			'<TD>'+res.data['ZGData']['last']+'</TD>' +
-			'<TD>'+res.data['ZGData']['buy']+'</TD>' +
-			'<td>'+res.data['ZGData']['sell']+'</td>' +
-			'<td>'+res.data['ZGData']['open']+'</td>' +
-			'<td>'+res.data['ZGData']['high']+'</td>' +
-			'<td>'+res.data['ZGData']['low']+'</td>' +
+			'<TD>'+res.Data.ZGData['last']+'</TD>' +
+			'<TD>'+res.Data.ZGData['buy']+'</TD>' +
+			'<td>'+res.Data.ZGData['sell']+'</td>' +
+			'<td>'+res.Data.ZGData['open']+'</td>' +
+			'<td>'+res.Data.ZGData['high']+'</td>' +
+			'<td>'+res.Data.ZGData['low']+'</td>' +
 			'<td>暂无</td>' +
-			'<td>'+res.data['ZGData']['vol']+'</td>' +
+			'<td>'+res.Data.ZGData['vol']+'</td>' +
 			'</TR>';
 		code += '<TR>' +
 			'<TD>火币</TD>' +
 			'<TD>ETHUSDT</TD>' +
-			'<TD>'+res.data['tick']['ask'][0]+'</TD>' +
-			'<td>'+res.data['tick']['bid'][0]+'</td>' +
-			'<td>'+res.data['tick']['open']+'</td>' +
-			'<td>'+res.data['tick']['high']+'</td>' +
-			'<td>'+res.data['tick']['low']+'</td>' +
+			'<TD>'+res.Data.HuoBiData['ask'][0]+'</TD>' +
+			'<td>'+res.Data.HuoBiData['bid'][0]+'</td>' +
+			'<td>'+res.Data.HuoBiData['open']+'</td>' +
+			'<td>'+res.Data.HuoBiData['high']+'</td>' +
+			'<td>'+res.Data.HuoBiData['low']+'</td>' +
 			'<td>暂无</td>' +
-			'<td>'+res.data['tick']['amount']+'</td>' +
+			'<td>'+res.Data['tick']['amount']+'</td>' +
 			'</TR>';
         div1.innerHTML = code;
     }
