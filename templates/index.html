@@ -53,8 +53,6 @@
 <script>
     var Tab_Data = function (res) {
         var div1 = document.getElementById('tab_Data');
-        console.log(typeof res)
-        console.log(res.Data.ZGData['last'])
         var code = '';
         code += '<TR>' +
 			'<TD>ZG</TD>' +
@@ -68,17 +66,21 @@
 			'<td>暂无</td>' +
 			'<td>'+res.Data.ZGData['vol']+'</td>' +
 			'</TR>';
-		code += '<TR>' +
-			'<TD>火币</TD>' +
-			'<TD>ETHUSDT</TD>' +
-			'<TD>'+res.Data.HuoBiData['ask'][0]+'</TD>' +
-			'<td>'+res.Data.HuoBiData['bid'][0]+'</td>' +
-			'<td>'+res.Data.HuoBiData['open']+'</td>' +
-			'<td>'+res.Data.HuoBiData['high']+'</td>' +
-			'<td>'+res.Data.HuoBiData['low']+'</td>' +
-			'<td>暂无</td>' +
-			'<td>'+res.Data['tick']['amount']+'</td>' +
-			'</TR>';
+        if (res.Data.HuoBiData['name']="火币")
+        {
+            code += '<TR>' +
+                '<TD>'+res.Data.HuoBiData['name']+'</TD>' +
+                '<TD>ETHUSDT</TD>' +
+                '<TD>'+res.Data.HuoBiData['ask'][0]+'</TD>' +
+                '<td>'+res.Data.HuoBiData['bid'][0]+'</td>' +
+                '<td>'+res.Data.HuoBiData['open']+'</td>' +
+                '<td>'+res.Data.HuoBiData['high']+'</td>' +
+                '<td>'+res.Data.HuoBiData['low']+'</td>' +
+                '<td>暂无</td>' +
+                '<td>'+res.Data['tick']['amount']+'</td>' +
+                '</TR>';
+        }
+
         div1.innerHTML = code;
     }
 </script>

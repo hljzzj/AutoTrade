@@ -33,7 +33,12 @@ def background_thread():
             pass
         # 第二步：处理各平台的数据
         ZGData['name'] = 'ZG'
-        Data = {'HuoBiData': HuoBiData, 'ZGData': ZGData}
+        if ZGData and HuoBiData:
+            Data = {'HuoBiData': HuoBiData, 'ZGData': ZGData}
+        elif ZGData:
+            Data = {'ZGData': ZGData}
+        elif HuoBiData:
+            Data = {'HuoBiData': HuoBiData}
         # print(Data)
         # 第三步：将数据发到前端
         socketio.emit('server_response',
