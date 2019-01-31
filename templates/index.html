@@ -38,8 +38,8 @@
 			<td>买一</td>
 			<td>卖一</td>
 			<td>开盘价</td>
-			<td>今日最高价</td>
-			<td>今日最低价</td>
+			<td>24H最高价</td>
+			<td>24H最低价</td>
 			<td>涨跌幅</td>
 			<td>24H交易量</td>
 		</tr>
@@ -55,7 +55,7 @@
         var div1 = document.getElementById('tab_Data');
         var code = '';
         code += '<TR>' +
-			'<TD>ZG</TD>' +
+			'<TD>'+res.Data.ZGData['name']+'</TD>' +
 			'<TD>ETHUSDT</TD>' +
 			'<TD>'+res.Data.ZGData['last']+'</TD>' +
 			'<TD>'+res.Data.ZGData['buy']+'</TD>' +
@@ -66,7 +66,7 @@
 			'<td>暂无</td>' +
 			'<td>'+res.Data.ZGData['vol']+'</td>' +
 			'</TR>';
-        if (res.Data.HuoBiData['name']="火币")
+        try
         {
             code += '<TR>' +
                 '<TD>'+res.Data.HuoBiData['name']+'</TD>' +
@@ -80,7 +80,7 @@
                 '<td>'+res.Data['tick']['amount']+'</td>' +
                 '</TR>';
         }
-
+		catch (e) {a=1}
         div1.innerHTML = code;
     }
 </script>

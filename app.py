@@ -4,6 +4,7 @@ from flask import Flask, render_template
 from flask_socketio import SocketIO
 from API.HuobiServices import *
 from API.ZGAPI import ZGtickers
+from API.GATEAPI import GateIO
 
 async_mode = None
 app = Flask(__name__)
@@ -16,7 +17,7 @@ thread_lock = Lock()
 # 后台线程 产生数据，即刻推送至前端
 def background_thread():
     while True:
-        socketio.sleep(5)
+        socketio.sleep(1)
         # 第一步：调用API获取平台实时价格数据
         try:
             # 火币
@@ -31,15 +32,25 @@ def background_thread():
         except:
             ZGData = None
             pass
+        GATEIOData = GateIO.ticker(eth_usdt)
+        try:
+            # GATE.IO
+            GATEIOData = GateIO.ticker("eth_usdt")
+            print('ok')
+        except:
+            GATEIOData = None
+            pass
         # 第二步：处理各平台的数据
+        print(GATEIOData)
+        GATEIOData['name'] = 'GATEIO'
         ZGData['name'] = 'ZG'
-        if ZGData and HuoBiData:
-            Data = {'HuoBiData': HuoBiData, 'ZGData': ZGData}
-        elif ZGData:
-            Data = {'ZGData': ZGData}
+        if ZGData and HuoBiData and GateIO:
+            Data = {'HuoBiData': HuoBiData, 'ZGData': ZGData, 'GATEIOData': GATEIOData}
+        elif ZGData and GateIO:
+            Data = {'ZGData': ZGData, 'GATEIOData': GATEIOData}
         elif HuoBiData:
             Data = {'HuoBiData': HuoBiData}
-        # print(Data)
+        print(Data)
         # 第三步：将数据发到前端
         socketio.emit('server_response',
                       {'Data': Data},
