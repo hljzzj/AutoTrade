@@ -133,4 +133,4 @@ if __name__ == '__main__':
 	apiKey ='1'
 	secretKey = '2'
 	gate_query = GateIO(API_QUERY_URL, apiKey, secretKey)
-	print(GateIO.ticker('eth_usdt'))
+	print(gate_query.ticker('eth_usdt'))

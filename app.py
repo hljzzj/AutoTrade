@@ -5,6 +5,7 @@ from flask_socketio import SocketIO
 from API.HuobiServices import *
 from API.ZGAPI import ZGtickers
 from API.GATEAPI import GateIO
+from API.ZAPI import ZApi
 
 async_mode = None
 app = Flask(__name__)
@@ -24,30 +25,41 @@ def background_thread():
             ticker = get_ticker("ethusdt")
             HuoBiData = ticker['tick']
         except:
-            HuoBiData = None
+            HuoBiData = {}
             pass
         try:
             # ZG
             ZGData = ZGtickers()
         except:
-            ZGData = None
+            ZGData = {}
             pass
-        GATEIOData = GateIO.ticker(eth_usdt)
         try:
             # GATE.IO
             GATEIOData = GateIO.ticker("eth_usdt")
-            print('ok')
         except:
-            GATEIOData = None
+            GATEIOData = {}
+            pass
+        try:
+            # ZB    https://www.bitkk.com/
+            ZBData = ZApi.ticker('eth_usdt')
+            print(ZBData)
+        except:
+            ZBData = {}
             pass
         # 第二步：处理各平台的数据
         print(GATEIOData)
         GATEIOData['name'] = 'GATEIO'
+        ZBData['name'] = 'ZB'
         ZGData['name'] = 'ZG'
-        if ZGData and HuoBiData and GateIO:
-            Data = {'HuoBiData': HuoBiData, 'ZGData': ZGData, 'GATEIOData': GATEIOData}
-        elif ZGData and GateIO:
-            Data = {'ZGData': ZGData, 'GATEIOData': GATEIOData}
+        if ZGData and HuoBiData and GATEIOData and ZBData:
+            Data = {
+                'HuoBiData': HuoBiData,
+                'ZGData': ZGData,
+                'GATEIOData': GATEIOData,
+                'ZBData': ZBData
+            }
+        elif ZGData and ZBData:
+            Data = {'ZGData': ZGData, 'GATEIOData': GATEIOData, 'ZBData': ZBData}
         elif HuoBiData:
             Data = {'HuoBiData': HuoBiData}
         print(Data)
